@@ -136,8 +136,7 @@ Permissioning for this entity is based on read token permissions for the referen
 
 Response: 
 
-```
-  {
+```[{
     "__v": 0,
     "_id": "54588a0f136595797ce14df1",
     "birthday": null,
@@ -190,8 +189,7 @@ Response:
     "uid": 767,
     "updated": "2015-01-05T23:54:15.454Z",
     "url": "https://www.facebook.com/SocialChorus"
-  }]
-```
+  }]```
 ### POST http://api.socialight.io/accounts
 
 Required Parameters: uid, token, service
