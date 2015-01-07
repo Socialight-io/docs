@@ -187,7 +187,6 @@ Response:
         }
       ]
     },
-    "token": "CAAGHZAbi1ZBkQBABeZBLoSU0JlZBKBJOjZAzRaUNGWWNp1I5JyTpxvpHJ36ziXL81bqTsTP8RlJ7cfmqqXOrxmuVtzN1jArEZB6gaafMPWKperJipOkQRN6TvCUd3muOg7tjlsU3sDSEUAFA4Mm9BY1Mu1aD7TbqrWaLjFbgM1TVA6VIYpZAqGatikMyOfr6z7tyXRcDx0LFT3MU6EWTOGC",
     "uid": 767,
     "updated": "2015-01-05T23:54:15.454Z",
     "url": "https://www.facebook.com/SocialChorus"
