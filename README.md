@@ -120,7 +120,8 @@ Permissioning for this entity is based on read token permissions for the referen
 
 Calls must include a service object as follows:
 
-``` {
+```
+[{
   name: 'facebook', 'twitter', 'instagram', or 'facebookpage',
   id: <platform post id>,
   sid: <platform account id>
@@ -133,6 +134,64 @@ Calls must include a service object as follows:
 Required Parameters: uid, token
 Permissioning for this entity is based on read token permissions for the referenced UID.
 
+Response: 
+
+```
+  {
+    "__v": 0,
+    "_id": "54588a0f136595797ce14df1",
+    "birthday": null,
+    "color": "#DD8833",
+    "created": "2014-11-04T08:10:55.504Z",
+    "engagement": {
+      "followers": 4508,
+      "following": 25
+    },
+    "location": {
+      "address": {
+        "country": "United States",
+        "zip": "94105",
+        "state": "CA",
+        "city": "San Francisco",
+        "street": "123 Mission Street, 12th Floor"
+      },
+      "place": "",
+      "lng": -122.394339,
+      "lat": 37.791882
+    },
+    "name": {
+      "first": "",
+      "last": "",
+      "full": "SocialChorus",
+      "alias": "SocialChorus"
+    },
+    "service": {
+      "id": "123740197664063",
+      "sid": "123740197664063",
+      "name": "facebookpage"
+    },
+    "thumb": {
+      "url": "http://graph.facebook.com/123740197664063/picture?type=square",
+      "thumb": "",
+      "caption": "",
+      "type": "photo",
+      "width": "",
+      "height": "",
+      "colors": [
+        {
+          "hue": null,
+          "saturation": null,
+          "lightness": null,
+          "cover": null
+        }
+      ]
+    },
+    "token": "CAAGHZAbi1ZBkQBABeZBLoSU0JlZBKBJOjZAzRaUNGWWNp1I5JyTpxvpHJ36ziXL81bqTsTP8RlJ7cfmqqXOrxmuVtzN1jArEZB6gaafMPWKperJipOkQRN6TvCUd3muOg7tjlsU3sDSEUAFA4Mm9BY1Mu1aD7TbqrWaLjFbgM1TVA6VIYpZAqGatikMyOfr6z7tyXRcDx0LFT3MU6EWTOGC",
+    "uid": 767,
+    "updated": "2015-01-05T23:54:15.454Z",
+    "url": "https://www.facebook.com/SocialChorus"
+  }]
+```
 ### POST http://api.socialight.io/accounts
 
 Required Parameters: uid, token, service
