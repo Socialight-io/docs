@@ -1,0 +1,148 @@
+<div class="container-chart container" style="min-height: 400px; margin-top: 30px">
+  <div class="row">
+    <div class="col-xs-12">
+      <h3 class="title">Popular Words & Tags (Last 28 Days)</h4>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-1">
+      <a href="" ng-click="limit = limit - 5; offset = offset + 5"><i class="fa fa-angle-left"></i></a>
+    </div>
+    <div class="col-sm-2 center" ng-repeat="item in list | limitTo:5">
+      <a href="" ng-mouseover="showScatter(item)" ng-mouseout="hideScatter(item)">
+        <i class="fa fa-circle" style="color: {{ item._id.user.color }}"></i> 
+        <i class="fa fa-{{ item._id.user.service.name == 'facebookpage' ? 'facebook' : item._id.user.service.name }}"></i> {{ item._id.user.name.alias }}
+      </a>
+    </div>
+    <div class="col-xs-1 right">
+      <a href="" ng-click="limit = limit + 5; offset = offset - 5"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+
+  <div class="row">
+    <words data="words" modal="single" selected="selected" style="height: 400px"></words>
+  </div>
+
+  <div ng-hide="words" class="center">
+    <h2 class="loading"><i class="fa fa-spin fa-circle-o-notch"></i> Loading Posts...</h2>
+  </div>
+</div>
+
+
+<div class="container container-metrics metrics blue" ng-show="summary">
+  <div class="row">
+    <div class="col-xs-12">
+      <h3 class="title">Content Summary March 2015</h4>
+    </div>
+  </div>
+  <div class="row center">
+    <div class="col-sm-4">
+      <div class="row">
+        <div class="col-sm-4 right">
+          <h1>{{ (summary[0].count | num:0) || "--" }}</h1>
+        </div>
+        <div class="col-xs-8 left">
+          <h4>Posts</h4>
+          <h5>
+            {{ diff('count', summary) | num:1 }}%
+          </h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="row">
+        <div class="col-sm-4 right">
+          <h1>{{ (summary[0].sentiment * 100 | num:1) || "--" }}%</h1>
+        </div>
+        <div class="col-xs-8 left">
+          <h4>Sentiment</h4>
+          <h5>
+            {{ diff('sentiment', summary) | num:2 }}%
+          </h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="row">
+        <div class="col-sm-4 right">
+          <h1>{{ ((summary[0].density * 100) | num: 1) || "--" }}%</h1>
+        </div>
+        <div class="col-xs-8 left">
+          <h4>Density</h4>
+          <h5>{{ diff('density', summary) | num:0 }}%</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row center metrics blue">
+    <div class="col-sm-4">
+      <div class="row">
+        <div class="col-sm-4 right">
+          <h1>{{ (summary[0].postlength | num:1) || "--" }}</h1>
+        </div>
+        <div class="col-xs-8 left">
+          <h4>Post Length</h4>
+          <h5>{{ diff('postlength', summary) | num:0 }}%</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="row">
+        <div class="col-sm-4 right">
+          <h1>{{ (summary[0].likes | num:0) || "--" }}</h1>
+        </div>
+        <div class="col-xs-8 left">
+          <h4>Likes</h4>
+          <h5>{{ diff('likes', summary) | num:0 }}%</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="row">
+        <div class="col-sm-4 right">
+          <h1>{{ (summary[0].comments | num:0) || "--" }}</h1>
+        </div>
+        <div class="col-xs-8 left">
+          <h4>Comments</h4>
+          <h5>{{ diff('comments', summary) | num:0 }}%</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container container-pies">
+  <div class="row">
+    <div class="col-xs-12">
+      <h3 class="title">Platforms & Post Types</h4>
+    </div>
+  </div>
+	<div class="row">
+    <div class="col-sm-2">
+      <voice data="platform" label="platformLabels"></voice>
+    </div>
+    <div class="col-sm-4">
+      <h3>Platform</h3>
+      <p>Which voice do you use in posts?</p>
+    </div>
+		<div class="col-sm-2">
+			<voice data="posttype" label="typeLabels"></voice>
+		</div>
+		<div class="col-sm-4">
+			<h3>Post Type</h3>
+			<p>Which voice do you use in posts?</p>
+		</div>
+	</div>
+</div>
+
+<div class="container container-pies">
+  <div class="row">
+    <div class="col-xs-12">
+      <h3 class="title">Time & Day</h4>
+    </div>
+  </div>
+  <div class="row" style="height: 400px">
+        <timeday data="hourday" options="options.timeseries" modal="single" selected="selected"></timeday>
+  </div>
+</div>

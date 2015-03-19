@@ -1,0 +1,12 @@
+#!/bin/bash
+interactive=
+
+grunt --force
+
+if [ $1 == production ]; then
+	aws s3 sync ./dist s3://static.socialight.io/public/libs/analytics/current
+	say "Deployed to Production"
+else
+	aws s3 sync ./dist s3://static.socialight.io/staging/libs/analytics/current
+	say "Deployed to Staging"
+fi

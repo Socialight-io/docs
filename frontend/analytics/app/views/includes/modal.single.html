@@ -1,0 +1,51 @@
+<!-- Modal -->
+<div class="modal fade" id="{{ id }}" tabindex="-1" role="dialog" data-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<button type="button" class="close" ng-click="show = false"><span aria-hidden="true">&times;</span></button>
+				<div class="tile">
+					<div class="tile-media">
+						<img ng-show="data.media[0]" ng-src="{{ data.media[0].url }}" />
+					</div>
+					<div class="tile-meta">
+						<div class="media">
+							<div class="media-left">
+								<a href="#">
+									<img class="media-object" ng-src="{{ data.user.thumb.url }}" alt="...">
+								</a>
+							</div>
+							<div class="media-body">
+							<h4 class="media-heading">{{ data.user.name.alias || data.user.name.full }}</h4>
+								{{ data.created|date }}
+							</div>
+						</div>
+					</div>
+					<div class="tile-content">
+						{{ data.post }}
+					</div>
+					<div class="tile-analytics">
+						<div class="row">
+							<div class="col-xs-4 center">
+								<h3>{{ data.engagement.audience.total | num:0 }}</h3>
+								<p>Audience</p>
+							</div>
+							<div class="col-xs-4 center">
+								<h3>{{ data.meta.engagement * 100 | num:1 }}%</h3>
+								<p>Engagement</p>
+							</div>
+							<div class="col-xs-4 center">
+								<h3>{{ data.meta.sentiment * 100 | num:1 }}%</h3>
+								<p>Sentiment</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" ng-show="footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" ng-click="action">{{ actionText }}</button>
+			</div>
+		</div>
+	</div>
+</div>
