@@ -100,8 +100,8 @@ angular.module('analyticsApp')
 				day: h[1],
 				data: d,
 				count: d.length,
-				sentiment: _.reduce(d, function (f, g) { return f + g.meta.engagement; }, 0) / d.length,
-				engagement: _.reduce(d, function (f, g) { return f + g.meta.sentiment; }, 0) / d.length
+				sentiment: _.reduce(d, function (f, g) { return f + (g.meta.engagement || 0); }, 0) / d.length,
+				engagement: _.reduce(d, function (f, g) { return f + (g.meta.sentiment || 0); }, 0) / d.length
 			}
 		});
 
@@ -120,7 +120,7 @@ angular.module('analyticsApp')
   			'facebook': 'Facebook',
   			'instagram': 'Instagram',
   			'facebookpage': 'FB Page' 
-  		}[d.data._id.service_name] + " (" + Math.round(d.data.engagement * 10000) / 100 + "%)";
+  		}[d.data._id.service_name];
   	}
 
    	$scope.typeLabels = function (d) { 
@@ -129,7 +129,7 @@ angular.module('analyticsApp')
   			'text': 'Text',
   			'video': 'Video',
   			'photo': 'Photo'
-  		}[d.data._id.type] + " (" + Math.round(d.data.engagement * 10000) / 100 + "%)";
+  		}[d.data._id.type];
   	}
 
   	var mapUsers = function (series, metric) { 

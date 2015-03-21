@@ -47,7 +47,7 @@ angular.module('analyticsApp')
 							left: 0
 						},
 						width = element.parent().width() - margin.left - margin.right,
-						height = (scope.options.height || 500) - margin.top - margin.bottom;
+						height = (scope.options.height || 400) - margin.top - margin.bottom;
 
 					var parseDate = d3.time.format("%Y-%m-%d").parse;
 
@@ -82,6 +82,8 @@ angular.module('analyticsApp')
 					    })
 						.orient("right");
 
+					d3.select("#" + scope.id + " svg").remove();
+
 					var svg = d3.select("#" + scope.id).append("svg")
 						.attr("width", width + margin.left + margin.right)
 						.attr("height", height + margin.top + margin.bottom)
@@ -108,10 +110,10 @@ angular.module('analyticsApp')
 
 					scale.domain([
 						d3.min(data, function(d) {
-							return d.meta.engagement;
+							return d.meta.engagement || 0;
 						}),
 						d3.max(data, function(d) {
-							return d.meta.engagement;
+							return d.meta.engagement || 0;
 						})
 					]);
 
@@ -148,7 +150,7 @@ angular.module('analyticsApp')
 							return x(moment.utc(d.created.substr(0, 10)).toDate());
 						})
 						.attr("r", function(d) {
-							return scale(d.meta.engagement);
+							return scale(d.meta.engagement || 0);
 						})
 						.style("fill", function(d) {
 							return d.user.color;
@@ -167,7 +169,6 @@ angular.module('analyticsApp')
 						})
 						.on("mousedown", function(d) {
 							scope.$apply(function () { 
-								console.log("THIS FAR");
 								scope.selected = d;
 								scope.modal = true;
 							});

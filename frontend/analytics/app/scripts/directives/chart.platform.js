@@ -82,7 +82,8 @@ angular.module('analyticsApp')
 						.tickFormat(function(d, i) {
 							return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][i]
 					    });
-
+					d3.select("#" + scope.id + " svg").remove();
+					
 					var svg = d3.select("#" + scope.id).append("svg")
 						.attr("width", width + margin.left + margin.right)
 						.attr("height", height + margin.top + margin.bottom)

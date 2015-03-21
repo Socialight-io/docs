@@ -82,6 +82,8 @@ angular.module('analyticsApp')
 					    .y1(function(d) { return y(d.percent); })
 					    .interpolate("basis");
 
+					d3.select("#" + scope.id + " svg").remove();
+					
 					var svg = d3.select("#" + scope.id).append("svg")
 					    .attr("width", width + margin.left + margin.right)
 					    .attr("height", height + margin.top + margin.bottom)
@@ -119,7 +121,7 @@ angular.module('analyticsApp')
 				      .attr("class", "y axis")
 				      .call(yAxis);
 
-				  svg.selectAll(".y.axis .tick").last().remove();
+				  svg.selectAll(".y.axis .tick").first().remove();
 				}
 
 			}

@@ -1,187 +1,206 @@
-<div class="container-chart container" style="min-height: 400px; margin-top: 30px">
-  <div class="row">
-    <div class="col-xs-12">
-      <h3 class="title">Posts (Last 28 Days)</h4>
-    </div>
+<div class="container-chart container" style="margin-top: 15px;">
+
+  <div ng-hide="scatter" class="center loading-analytics">
+    <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Post Map...</h2>
   </div>
 
-  <div class="row">
-    <div class="col-xs-1">
-      <a href="" ng-click="limit = limit - 5; offset = offset + 5"><i class="fa fa-angle-left"></i></a>
+  <div class="white-panel animate-fade" ng-class="{'fade-in': scatter}">
+    <div class="row">
+      <div class="col-xs-12">
+        <h3 class="title">Posts (Last 28 Days)</h3>
+      </div>
     </div>
-    <div class="col-sm-2 center" ng-repeat="item in list | limitTo:5">
-      <a href="" ng-mouseover="showScatter(item)" ng-mouseout="hideScatter(item)">
-        <i class="fa fa-circle" style="color: {{ item._id.user.color }}"></i> 
-        <i class="fa fa-{{ item._id.user.service.name == 'facebookpage' ? 'facebook' : item._id.user.service.name }}"></i> {{ item._id.user.name.alias }}
-      </a>
-    </div>
-    <div class="col-xs-1 right">
-      <a href="" ng-click="limit = limit + 5; offset = offset - 5"><i class="fa fa-angle-right"></i></a>
-    </div>
-  </div>
 
-  <div class="row">
-    <scatter data="scatter" options="options.timeseries" modal="single" selected="selected"></scatter>
-  </div>
-  <div ng-hide="scatter" class="center">
-    <h2 class="loading"><i class="fa fa-spin fa-circle-o-notch"></i> Loading Posts...</h2>
+    <div class="row">
+      <div class="col-xs-1">
+        <a href="" ng-click="limit = limit - 5; offset = offset + 5"><i class="fa fa-angle-left"></i></a>
+      </div>
+      <div class="col-sm-2 center" ng-repeat="item in list | limitTo:5">
+        <a href="" ng-mouseover="showScatter(item)" ng-mouseout="hideScatter(item)">
+          <i class="fa fa-circle" style="color: {{ item._id.user.color }}"></i> 
+          <i class="fa fa-{{ item._id.user.service.name == 'facebookpage' ? 'facebook' : item._id.user.service.name }}"></i> {{ item._id.user.name.alias }}
+        </a>
+      </div>
+
+      <div class="col-xs-1 right">
+        <a href="" ng-click="limit = limit + 5; offset = offset - 5"><i class="fa fa-angle-right"></i></a>
+      </div>
+    </div>
+
+    <div class="row" style="height: 400px">
+      <scatter data="scatter" options="options.timeseries" modal="single" selected="selected"></scatter>
+    </div>
+
   </div>
 </div>
 
 <modal show="single" data="selected" includeTemplate="'views/includes/tile.html'"></modal>
 
-<div ng-hide="summary" class="center">
-  <h2 class="loading"><i class="fa fa-spin fa-circle-o-notch"></i> Loading Summary Metrics...</h2>
-</div>
+<div class="container container-metrics metrics blue">
 
-<div class="container container-metrics metrics blue" ng-show="summary">
-  <div class="row">
-    <div class="col-xs-12">
-      <h3 class="title">Accounts Summary</h4>
-    </div>
+  <div ng-hide="summary" class="center loading-analytics">
+    <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Summary Metrics...</h2>
   </div>
-  <div class="row center">
-    <div class="col-sm-4">
-      <div class="row">
-        <div class="col-sm-4 right">
-          <h1>{{ (summary[0].engagement * 100 | num:1) || "--" }}%</h1>
-        </div>
-        <div class="col-xs-8 left">
-          <h4>Engagement</h4>
-          <h5>
-            {{ diff('engagement', summary) | num:1 }}%
-          </h5>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="row">
-        <div class="col-sm-4 right">
-          <h1>{{ (summary[0].sentiment * 100 | num:1) || "--" }}%</h1>
-        </div>
-        <div class="col-xs-8 left">
-          <h4>Sentiment</h4>
-          <h5>
-            {{ diff('sentiment', summary) | num:2 }}%
-          </h5>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="row">
-        <div class="col-sm-4 right">
-          <h1>{{ ((summary[0].count / 28) | num: 0) || "--" }}</h1>
-        </div>
-        <div class="col-xs-8 left">
-          <h4>Post Rate</h4>
-          <h5>{{ diff('count', summary) | num:0 }}%</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row center metrics blue">
-    <div class="col-sm-4">
-      <div class="row">
-        <div class="col-sm-4 right">
-          <h1>{{ (summary[0].audience | num:0) || "--" }}</h1>
-        </div>
-        <div class="col-xs-8 left">
-          <h4>Reach</h4>
-          <h5>{{ diff('audience', summary) | num:0 }}%</h5>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="row">
-        <div class="col-sm-4 right">
-          <h1>{{ (summary[0].likes | num:0) || "--" }}</h1>
-        </div>
-        <div class="col-xs-8 left">
-          <h4>Likes</h4>
-          <h5>{{ diff('likes', summary) | num:0 }}%</h5>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="row">
-        <div class="col-sm-4 right">
-          <h1>{{ (summary[0].comments | num:0) || "--" }}</h1>
-        </div>
-        <div class="col-xs-8 left">
-          <h4>Comments</h4>
-          <h5>{{ diff('comments', summary) | num:0 }}%</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<div ng-hide="list" class="center">
-  <h2 class="loading"><i class="fa fa-spin fa-circle-o-notch"></i> Loading Top Accounts...</h2>
+  <div class="white-panel animate-fade" ng-class="{'fade-in': summary}">
+    <div class="row">
+      <div class="col-xs-12">
+        <h3 class="title">Accounts Summary</h3>
+      </div>
+    </div>
+    <div class="row center">
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-4 right">
+            <h1>{{ (summary[0].engagement * 100 | num:1) || "--" }}%</h1>
+          </div>
+          <div class="col-xs-8 left">
+            <h4>Engagement</h4>
+            <h5>
+              {{ diff('engagement', summary) | num:1 }}%
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-4 right">
+            <h1>{{ (summary[0].sentiment * 100 | num:1) || "--" }}%</h1>
+          </div>
+          <div class="col-xs-8 left">
+            <h4>Sentiment</h4>
+            <h5>
+              {{ diff('sentiment', summary) | num:2 }}%
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-4 right">
+            <h1>{{ ((summary[0].count / 28) | num: 0) || "--" }}</h1>
+          </div>
+          <div class="col-xs-8 left">
+            <h4>Post Rate</h4>
+            <h5>{{ diff('count', summary) | num:0 }}%</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row center metrics blue">
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-4 right">
+            <h1>{{ (summary[0].audience | num:0) || "--" }}</h1>
+          </div>
+          <div class="col-xs-8 left">
+            <h4>Reach</h4>
+            <h5>{{ diff('audience', summary) | num:0 }}%</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-4 right">
+            <h1>{{ (summary[0].likes | num:0) || "--" }}</h1>
+          </div>
+          <div class="col-xs-8 left">
+            <h4>Likes</h4>
+            <h5>{{ diff('likes', summary) | num:0 }}%</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-4 right">
+            <h1>{{ (summary[0].comments | num:0) || "--" }}</h1>
+          </div>
+          <div class="col-xs-8 left">
+            <h4>Comments</h4>
+            <h5>{{ diff('comments', summary) | num:0 }}%</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div ng-show="list" class="container container-lists top-5">
-  <div class="row">
-    <div class="col-xs-12">
-      <h3 class="title">Top Accounts</h4>
-    </div>
+
+  <div ng-hide="list" class="center loading-analytics">
+    <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Top Accounts...</h2>
   </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-2">
-      <h4>Most Active Accounts</h4>
-    </div>
-    <div class="col-xs-6 col-sm-2" ng-repeat="item in list | orderBy:'count':'desc' | limitTo:5">
-      <div class="media">
-        <div class="media-left media-middle">
-          <a href="http://{{ item._id.user.service.name }}.com/{{ item._id.user.name.alias }}">
-            <div class="dot" style="background: {{ item._id.user.color }}"></div>
-          </a>
-        </div>
-        <div class="media-body">
-          <h3>{{ item.count }} <small>Posts</small></h3>
-          <h4 class="media-heading"><a href="http://{{ item._id.user.service.name }}.com/{{ item._id.user.name.alias }}">
-            <img class="media-object" ng-src="{{ item._id.user.thumb.url }}" alt="...">
-          {{ item._id.user.name.full || item._id.user.name.alias }}</a></h4>
-        </div>
+
+  <div class="white-panel animate-fade" ng-class="{'fade-in': list}">
+    <div class="row">
+      <div class="col-xs-12">
+        <h3 class="title">Top Accounts</h3>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-2">
-      <h4>Most Engaging Accounts</h4>
-    </div>
-    <div class="col-xs-6 col-sm-2" ng-repeat="item in list | orderBy:'engagement':'desc' | limitTo:5">
-      <div class="media">
-        <div class="media-left media-middle">
-          <a href="http://{{ item._id.user.service.name }}.com/{{ item._id.user.name.alias }}">
-            <div class="dot" style="background: {{ item._id.user.color }}"></div>
-          </a>
-        </div>
-        <div class="media-body">
-          <h3>{{ item.engagement * 100 | num:1 }}%</h3>
-          <h4 class="media-heading"><a href="http://{{ item._id.user.service.name }}.com/{{ item._id.user.name.alias }}">
-            <img class="media-object" ng-src="{{ item._id.user.thumb.url }}" alt="...">
-            {{ item._id.user.name.full || item._id.user.name.alias }}</a></h4>
+    <div class="row">
+      <div class="col-xs-6 col-sm-2">
+        <h4>Most Active Accounts</h4>
+      </div>
+      <div class="col-xs-6 col-sm-2" ng-repeat="item in list | orderBy:'count':'desc' | limitTo:5">
+        <div class="media">
+          <div class="media-left media-middle">
+            <a href="http://{{ item._id.user.service.name }}.com/{{ item._id.user.name.alias }}">
+              <div class="dot" style="background: {{ item._id.user.color }}"></div>
+            </a>
+          </div>
+          <div class="media-body">
+            <h3>{{ item.count }} <small>Posts</small></h3>
+            <h4 class="media-heading"><a href="http://{{ item._id.user.service.name }}.com/{{ item._id.user.name.alias }}">
+              <img class="media-object" ng-src="{{ item._id.user.thumb.url }}" alt="...">
+              {{ item._id.user.name.full || item._id.user.name.alias }}</a></h4>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6 col-sm-2">
-      <h4>Highest Sentiment Accounts</h4>
-    </div>
-    <div class="col-xs-6 col-sm-2" ng-repeat="item in list | orderBy:'sentiment':'desc' | limitTo:5">
-      <div class="media">
-        <div class="media-left media-middle">
-          <a href="http://{{ item._id.user.service.name }}.com/{{ item._id.user.name.alias }}">
-            <div class="dot" style="background: {{ item._id.user.color }}"></div>
-          </a>
+      <div class="row">
+        <div class="col-xs-6 col-sm-2">
+          <h4>Most Engaging Accounts</h4>
         </div>
-        <div class="media-body">
-          <h3>{{ item.sentiment * 100 | num:1 }}%</h3>
-          <h4 class="media-heading"><a href="http://{{ item._id.user.service.name }}.com/{{ item._id.user.name.alias }}">
-            <img class="media-object" ng-src="{{ item._id.user.thumb.url }}" alt="...">
-            {{ item._id.user.name.full || item._id.user.name.alias }}</a></h4>
+        <div class="col-xs-6 col-sm-2" ng-repeat="item in list | orderBy:'engagement':'desc' | limitTo:5">
+          <div class="media">
+            <div class="media-left media-middle">
+              <a href="http://{{ item._id.user.service.name }}.com/{{ item._id.user.name.alias }}">
+                <div class="dot" style="background: {{ item._id.user.color }}"></div>
+              </a>
+            </div>
+            <div class="media-body">
+              <h3>{{ item.engagement * 100 | num:1 }}%</h3>
+              <h4 class="media-heading">
+                <a href="http://{{ item._id.user.service.name }}.com/{{ item._id.user.name.alias }}">
+                  <img class="media-object" ng-src="{{ item._id.user.thumb.url }}" alt="...">
+                  {{ item._id.user.name.full || item._id.user.name.alias }}
+                </a>
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-2">
+          <h4>Highest Sentiment Accounts</h4>
+        </div>
+        <div class="col-xs-6 col-sm-2" ng-repeat="item in list | orderBy:'sentiment':'desc' | limitTo:5">
+          <div class="media">
+            <div class="media-left media-middle">
+              <a href="http://{{ item._id.user.service.name }}.com/{{ item._id.user.name.alias }}">
+                <div class="dot" style="background: {{ item._id.user.color }}"></div>
+              </a>
+            </div>
+            <div class="media-body">
+              <h3>{{ item.sentiment * 100 | num:1 }}%</h3>
+              <h4 class="media-heading">
+                <a href="http://{{ item._id.user.service.name }}.com/{{ item._id.user.name.alias }}">
+                  <img class="media-object" ng-src="{{ item._id.user.thumb.url }}" alt="...">
+                  {{ item._id.user.name.full || item._id.user.name.alias }}
+                </a>
+              </h4>
+            </div>
+          </div>
         </div>
       </div>
     </div>

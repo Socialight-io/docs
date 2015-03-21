@@ -30,14 +30,14 @@ angular.module('analyticsApp')
 				scope.init = function() {
 
 					var margin = {
-							top: 30,
+							top: 0,
 							right: 30,
-							bottom: 150,
+							bottom: 100,
 							left: 30
 						},
 
 					width = element.parent().width() - margin.left - margin.right,
-					height = (500) - margin.top - margin.bottom;
+					height = (400) - margin.top - margin.bottom;
 
 
 					var x = d3.scale.ordinal()
@@ -47,13 +47,13 @@ angular.module('analyticsApp')
 						.rangeRoundBands([0, width], .1);
 
 					var colors = d3.scale.linear()
-						.range([.1, 1]);
+						.range([.5, 1]);
 
 					var y = d3.scale.linear()
-						.range([height, 0]);
+						.range([0, height]);
 
 					var yEng = d3.scale.linear()
-						.range([height, 0]);
+						.range([10, height]);
 
 					var xAxis = d3.svg.axis()
 						.scale(x)
@@ -63,6 +63,8 @@ angular.module('analyticsApp')
 						.scale(y)
 						.orient("left")
 						.ticks(10, "%");
+
+					d3.select("#" + scope.id + " svg").remove();
 
 					var svg = d3.select("#" + scope.id).append("svg")
 						.attr("width", width + margin.left + margin.right)
@@ -74,12 +76,12 @@ angular.module('analyticsApp')
 						return d._id.words;
 					}));
 
-					xEng.domain(scope.data.map(function(d) {
-						return d._id.words;
-					}));
-
 					y.domain([0, d3.max(scope.data, function(d) {
 						return d.count;
+					})]);
+
+					yEng.domain([0, d3.max(scope.data, function(d) {
+						return d.engagement;
 					})]);
 
 					colors.domain([0, d3.max(scope.data, function(d) {
@@ -92,22 +94,35 @@ angular.module('analyticsApp')
 						.call(xAxis)
 						.selectAll("text")
 						    .attr("y", 0)
-						    .attr("x", 10)
+						    .attr("x", 20)
 						    .attr("dy", ".35em")
 						    .attr("transform", "rotate(90)")
 						    .style("text-anchor", "start");
 
 					svg.selectAll(".x.axis line").remove();
 
-					svg.append("g")
+					var yax = svg.append("g")
 						.attr("class", "y axis")
-						.call(yAxis)
-						.append("text")
+						.call(yAxis);
+
+					yax.selectAll(".ticks text")
+						.style("fill", "white");
+
+					yax.append("text")
 						.attr("transform", "rotate(-90)")
 						.attr("y", 6)
+						.attr("x", -(height / 2) + 10)
 						.attr("dy", ".71em")
-						.style("text-anchor", "end")
-						.text("Word Frequency");
+						.style("text-anchor", "start")
+						.text("WORD FREQUENCY");
+
+					yax.append("text")
+						.attr("transform", "rotate(-90)")
+						.attr("y", 6)
+						.attr("x", -(height) + 10)
+						.attr("dy", ".71em")
+						.style("text-anchor", "start")
+						.text("ENGAGEMENT");
 
 					svg.selectAll(".y.axis .tick text").remove();
 					svg.selectAll(".y.axis .tick line").remove();
@@ -121,30 +136,40 @@ angular.module('analyticsApp')
 						})
 						.attr("width", x.rangeBand())
 						.attr("y", function(d) {
-							return y(d.count);
+							return (height - y(d.count)) / 2;
 						})
 						.attr("height", function(d) {
-							return height - y(d.count);
+							return (y(d.count)) / 2;
 						})
 						.style("fill", function (d) { 
 							return "#006699";
 						})
 						.style("opacity", function (d) { 
 							return colors(d.engagement);
+						});
+
+					svg.append("g")
+						.attr("class", "bars")
+						.attr("y", 10)
+						.selectAll(".bar2")
+						.data(scope.data)
+						.enter().append("rect")
+						.attr("class", "bar2")
+						.attr("x", function(d) {
+							return x(d._id.words);
 						})
-						.on("mouseover", function(d) {
-							console.log("THIS FAR");
-							d3.selectAll(".bar").attr("data-fade", true);
-							d3.select(this).attr("data-fade", false);
+						.attr("width", x.rangeBand())
+						.attr("y", function(d) {
+							return ((height - yEng(d.engagement)) / 2) + (height / 2) + 10;
 						})
-						.on("mouseout", function(d) {
-							d3.selectAll(".bar").attr("data-fade", false);
+						.attr("height", function(d) {
+							return ((yEng(d.engagement) - 20) / 2) + 10;
 						})
-						.on("mousedown", function(d) {
-							scope.$apply(function () { 
-								scope.selected = d;
-								scope.modal = true;
-							});
+						.style("fill", function (d) { 
+							return "#006699";
+						})
+						.style("opacity", function (d) { 
+							return colors(d.engagement);
 						});
 
 				}

@@ -27,6 +27,8 @@ angular.module('analyticsApp')
 
 		function init() {
 
+		  if (!google) { return false; }
+		  
 		  var mapOptions = {
 		    zoom: 2,
 		    center: new google.maps.LatLng(35.173808, -37.26562),

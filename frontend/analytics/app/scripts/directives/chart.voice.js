@@ -62,7 +62,7 @@ angular.module('analyticsApp')
 					    .outerRadius(radius - 30);
 
 					d3.select("#" + scope.id + " svg").remove();
-					
+
 					var svg = d3.select("#" + scope.id).append("svg")
 						.attr("class", "pie")
 					    .attr("width", width)
@@ -77,23 +77,24 @@ angular.module('analyticsApp')
 					  .attr("fill", function(d, i) { return "#006699"; })
 					  .attr("opacity", function (d, i) { return color(i); })
 					  .attr("d", arc)
-						.on("mouseover", function(d) {
-
+						.on("mouseover", function(d, i) {
+							svg.select(".label-"+i).style("opacity", 1);
 						})
-						.on("mouseout", function(d) {
-
+						.on("mouseout", function(d, i) {
+							svg.select(".label-"+i).style("opacity", .6);
 						})
 						.on("mousedown", function(d) {
 
 						});
 
 					var text = svg.datum(scope.data).selectAll("text")
-						.data(pie);
+						.data(pie2);
 
 					text.enter()
 						.append("text")
 						.attr("dy", ".25em")
-						.attr("class", function (d) { })
+						.attr("class", function (d, i) { return "label-"+i; })
+						.style("opacity", .6)
 						.style("text-anchor", "middle")
 						.text(function(d) {
 							return scope.label ? scope.label(d) : (_.reduce(_.values(d.data._id), function (z, y) { return z + " " + y; }, "")).toUpperCase();

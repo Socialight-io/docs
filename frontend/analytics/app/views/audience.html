@@ -1,92 +1,108 @@
-  
-<div class="container-chart container" style="padding: 6px; min-height: 400px; margin-top: 30px">
-  <div class="row">
-    <div class="col-xs-12">
-		<div ng-hide="pins" class="center">
-			<h2 class="loading"><i class="fa fa-spin fa-circle-o-notch"></i> Loading Posts...</h2>
-		</div>
-    	<div mapposts data="pins"></div>
-    </div>
+
+<div class="container-chart container" style="min-height: 400px; margin-top: 15px">
+
+  <div ng-hide="pins" class="center loading-analytics">
+    <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Top Words...</h2>
   </div>
+
+  <div class="white-panel animate-fade" ng-class="{'fade-in': pins}">
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div ng-hide="pins" class="center">
+         <h2 class="loading"><i class="fa fa-spin fa-circle-o-notch"></i> Loading Posts...</h2>
+       </div>
+       <div mapposts data="pins"></div>
+     </div>
+   </div>
+ </div>
 </div>
 
 
-<div class="container container-metrics metrics blue" ng-show="summary">
-  <div class="row">
-    <div class="col-xs-12">
-      <h3 class="title">Content Summary March 2015</h4>
-    </div>
+<div class="container container-metrics metrics blue">
+
+  <div ng-hide="summary" class="center loading-analytics">
+    <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Audience Summary...</h2>
   </div>
-  <div class="row center">
-    <div class="col-sm-4">
-      <div class="row">
-        <div class="col-sm-4 right">
-          <h1>{{ (summary[0].count | num:0) || "--" }}</h1>
+
+  <div class="white-panel animate-fade" ng-class="{'fade-in': summary}">
+
+    <div class="row">
+      <div class="col-xs-12">
+        <h3 class="title">Content Summary March 2015</h3>
+      </div>
+    </div>
+    <div class="row center">
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-4 right">
+            <h1>{{ (summary[0].count | num:0) || "--" }}</h1>
+          </div>
+          <div class="col-xs-8 left">
+            <h4>Posts</h4>
+            <h5>
+              {{ diff('count', summary) | num:1 }}%
+            </h5>
+          </div>
         </div>
-        <div class="col-xs-8 left">
-          <h4>Posts</h4>
-          <h5>
-            {{ diff('count', summary) | num:1 }}%
-          </h5>
+      </div>
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-4 right">
+            <h1>{{ (summary[0].sentiment * 100 | num:1) || "--" }}%</h1>
+          </div>
+          <div class="col-xs-8 left">
+            <h4>Sentiment</h4>
+            <h5>
+              {{ diff('sentiment', summary) | num:2 }}%
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-4 right">
+            <h1>{{ ((summary[0].density * 100) | num: 1) || "--" }}%</h1>
+          </div>
+          <div class="col-xs-8 left">
+            <h4>Density</h4>
+            <h5>{{ diff('density', summary) | num:0 }}%</h5>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-sm-4">
-      <div class="row">
-        <div class="col-sm-4 right">
-          <h1>{{ (summary[0].sentiment * 100 | num:1) || "--" }}%</h1>
-        </div>
-        <div class="col-xs-8 left">
-          <h4>Sentiment</h4>
-          <h5>
-            {{ diff('sentiment', summary) | num:2 }}%
-          </h5>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="row">
-        <div class="col-sm-4 right">
-          <h1>{{ ((summary[0].density * 100) | num: 1) || "--" }}%</h1>
-        </div>
-        <div class="col-xs-8 left">
-          <h4>Density</h4>
-          <h5>{{ diff('density', summary) | num:0 }}%</h5>
+    <div class="row center metrics blue">
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-4 right">
+            <h1>{{ (summary[0].postlength | num:1) || "--" }}</h1>
+          </div>
+          <div class="col-xs-8 left">
+            <h4>Post Length</h4>
+            <h5>{{ diff('postlength', summary) | num:0 }}%</h5>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row center metrics blue">
-    <div class="col-sm-4">
-      <div class="row">
-        <div class="col-sm-4 right">
-          <h1>{{ (summary[0].postlength | num:1) || "--" }}</h1>
-        </div>
-        <div class="col-xs-8 left">
-          <h4>Post Length</h4>
-          <h5>{{ diff('postlength', summary) | num:0 }}%</h5>
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-4 right">
+            <h1>{{ (summary[0].likes | num:0) || "--" }}</h1>
+          </div>
+          <div class="col-xs-8 left">
+            <h4>Likes</h4>
+            <h5>{{ diff('likes', summary) | num:0 }}%</h5>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="row">
-        <div class="col-sm-4 right">
-          <h1>{{ (summary[0].likes | num:0) || "--" }}</h1>
-        </div>
-        <div class="col-xs-8 left">
-          <h4>Likes</h4>
-          <h5>{{ diff('likes', summary) | num:0 }}%</h5>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="row">
-        <div class="col-sm-4 right">
-          <h1>{{ (summary[0].comments | num:0) || "--" }}</h1>
-        </div>
-        <div class="col-xs-8 left">
-          <h4>Comments</h4>
-          <h5>{{ diff('comments', summary) | num:0 }}%</h5>
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-4 right">
+            <h1>{{ (summary[0].comments | num:0) || "--" }}</h1>
+          </div>
+          <div class="col-xs-8 left">
+            <h4>Comments</h4>
+            <h5>{{ diff('comments', summary) | num:0 }}%</h5>
+          </div>
         </div>
       </div>
     </div>
@@ -94,90 +110,114 @@
 </div>
 
 <div class="container">
-	<div class="row">
-		<div class="col-sm-6">
-			<table class="table" style="margin-bottom: 0">
-				<thead>
-					<tr>
-						<th colspan="2"><h3 class="title-table">Top Countries</h3></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="country in countries | limitTo: 5">
-						<td>{{ country._id.location_country }}</td>
-						<td class="right">{{ country.percent | number: 2 }}%</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="col-sm-6">
-			<table class="table" style="margin-bottom: 0">
-				<thead>
-					<tr>
-						<th colspan="2"><h3 class="title-table">Top States</h3></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="state in states | limitTo: 5">
-						<td>{{ state.state }}</td>
-						<td class="right">{{ state.percent | number: 2 }}%</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
+
+  <div ng-hide="countries" class="center loading-analytics">
+    <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Top Words...</h2>
+  </div>
+
+  <div class="white-panel animate-fade" ng-class="{'fade-in': countries}">
+
+   <div class="row">
+    <div class="col-sm-6">
+     <table class="table" style="margin-bottom: 0">
+      <thead>
+       <tr>
+        <th colspan="2">
+          <h3 class="title-table">Top Countries</h3>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+     <tr ng-repeat="country in countries | limitTo: 5">
+      <td>{{ country._id.location_country }}</td>
+      <td class="right">{{ country.percent | number: 2 }}%</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="col-sm-6">
+ <table class="table" style="margin-bottom: 0">
+  <thead>
+   <tr>
+    <th colspan="2"><h3 class="title-table">Top States</h3></th>
+  </tr>
+</thead>
+<tbody>
+ <tr ng-repeat="state in states | limitTo: 5">
+  <td>{{ state.state }}</td>
+  <td class="right">{{ state.percent | number: 2 }}%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </div>
 
 
 <div class="container container-pies">
-  <div class="row">
-    <div class="col-xs-12">
-      <h3 class="title">Audience Activity & Influence</h4>
+  <div ng-hide="posts" class="center loading-analytics">
+    <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Platforms & Influence...</h2>
+  </div>
+
+  <div class="white-panel animate-fade" ng-class="{'fade-in': posts}">
+    <div class="row">
+      <div class="col-xs-12">
+        <h3 class="title">Audience Activity & Influence</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 post-graph">
+        <followers data="posts" labels='["Less Active", "Very Active"]'></followers>
+        <h5 class="center">% of Accounts with X Posts</h5>
+      </div>
+      <div class="col-sm-6 followers-graph">
+        <followers data="sizes" labels='["Less Influence", "Very Influential"]'></followers>
+        <h5 class="center">% of Accounts with X Followers</h5>
+      </div>
     </div>
   </div>
-	<div class="row">
-    <div class="col-sm-6 post-graph">
-      <followers data="posts" labels='["Less Active", "Very Active"]'></followers>
-      <h5 class="center">% of Accounts with X Posts</h5>
-    </div>
-    <div class="col-sm-6 followers-graph">
-      <followers data="sizes" labels='["Less Influence", "Very Influential"]'></followers>
-      <h5 class="center">% of Accounts with X Followers</h5>
-    </div>
-	</div>
 </div>
 
 
 <div class="container">
-  <div class="row">
-    <div class="col-xs-12">
-      <h3 class="title">Gender & Ages</h4>
-    </div>
+  <div ng-hide="gender" class="center loading-analytics">
+  <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Genders & Ages...</h2>
   </div>
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="media">
-        <div class="media-left media-middle">
-          <a href="#">
-            <img class="media-object" src="/images/male.png" style="max-height: 80px;">
-          </a>
-        </div>
-        <div class="media-body">
-          <h2 class="media-heading">{{ (gender.male.percent | number: 2) || "--" }}</h2>
-          <p>MALE AUDIENCE</p>
-        </div>
+
+  <div class="white-panel animate-fade" ng-class="{'fade-in': gender}">
+
+    <div class="row">
+      <div class="col-xs-12">
+        <h3 class="title">Gender & Ages</h3>
       </div>
     </div>
-    <div class="col-sm-3">
-      <div class="media">
-        <div class="media-left media-middle">
-          <a href="#">
-            <img class="media-object" src="/images/female.png" style="max-height: 80px;">
-          </a>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="media">
+          <div class="media-left media-middle">
+            <a href="#">
+              <img class="media-object" src="/images/male.png" style="max-height: 80px;">
+            </a>
+          </div>
+          <div class="media-body">
+            <h2 class="media-heading">{{ (gender.male.percent | number: 2) || "--" }}</h2>
+            <p>MALE AUDIENCE</p>
+          </div>
         </div>
-        <div class="media-body">
-          <h2 class="media-heading">{{ (gender.female.percent | number: 2) || "--" }}</h2>
-          <p>FEMALE AUDIENCE</p>
+      </div>
+      <div class="col-sm-3">
+        <div class="media">
+          <div class="media-left media-middle">
+            <a href="#">
+              <img class="media-object" src="/images/female.png" style="max-height: 80px;">
+            </a>
+          </div>
+          <div class="media-body">
+            <h2 class="media-heading">{{ (gender.female.percent | number: 2) || "--" }}</h2>
+            <p>FEMALE AUDIENCE</p>
+          </div>
         </div>
       </div>
     </div>
