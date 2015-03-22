@@ -16,7 +16,6 @@ angular.module('analyticsApp')
       },
       link: function postLink(scope, element, attrs) {
         var map;
-        var google = google || {};
 
         scope.id = "chart-" + Math.round(Math.random() * 1000000);
 
