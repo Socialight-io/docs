@@ -49,7 +49,4 @@ angular
           'http://static.socialight.io/**',
           'https://api.instagram.com/**'
       ]);
-  })
-  .run(function($logincheck, $location) {
-      console.log("THIS FAR");
-    });
+  });
