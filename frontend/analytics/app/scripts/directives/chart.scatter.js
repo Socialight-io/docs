@@ -110,10 +110,10 @@ angular.module('analyticsApp')
 
 					scale.domain([
 						d3.min(data, function(d) {
-							return d.meta.engagement || 0;
+							return d.meta ? d.meta.engagement : 0;
 						}),
 						d3.max(data, function(d) {
-							return d.meta.engagement || 0;
+							return d.meta ? d.meta.engagement : 0;
 						})
 					]);
 
@@ -150,7 +150,7 @@ angular.module('analyticsApp')
 							return x(moment.utc(d.created.substr(0, 10)).toDate());
 						})
 						.attr("r", function(d) {
-							return scale(d.meta.engagement || 0);
+							return scale(d.meta ? d.meta.engagement : 0);
 						})
 						.style("fill", function(d) {
 							return d.user.color;

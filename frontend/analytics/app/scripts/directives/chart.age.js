@@ -13,9 +13,6 @@ angular.module('analyticsApp')
 			restrict: 'E',
 			scope: {
 				data: "=",
-				options: "=",
-				selected: "=",
-				modal: "=",
 				labels: "="
 			},
 			link: function postLink(scope, element, attrs) {

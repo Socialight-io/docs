@@ -16,6 +16,7 @@ angular.module('analyticsApp')
       },
       link: function postLink(scope, element, attrs) {
         var map;
+        var google = google || {};
 
         scope.id = "chart-" + Math.round(Math.random() * 1000000);
 
@@ -28,7 +29,7 @@ angular.module('analyticsApp')
 		function init() {
 
 		  if (!google) { return false; }
-		  
+
 		  var mapOptions = {
 		    zoom: 2,
 		    center: new google.maps.LatLng(35.173808, -37.26562),
@@ -76,7 +77,7 @@ angular.module('analyticsApp')
 		  });
 		}
 
-		var geocoder = new google.maps.Geocoder();
+		var geocoder = google ? new google.maps.Geocoder() : {};
 
 
 		function geocodePlace(d, callback) {

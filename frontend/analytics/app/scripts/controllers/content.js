@@ -100,8 +100,8 @@ angular.module('analyticsApp')
 				day: h[1],
 				data: d,
 				count: d.length,
-				sentiment: _.reduce(d, function (f, g) { return f + (g.meta.engagement || 0); }, 0) / d.length,
-				engagement: _.reduce(d, function (f, g) { return f + (g.meta.sentiment || 0); }, 0) / d.length
+				sentiment: _.reduce(d, function (f, g) { return f + (g.meta ? g.meta.engagement : 0); }, 0) / d.length,
+				engagement: _.reduce(d, function (f, g) { return f + (g.meta ? g.meta.sentiment : 0); }, 0) / d.length
 			}
 		});
 

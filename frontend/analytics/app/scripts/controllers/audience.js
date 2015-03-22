@@ -24,6 +24,9 @@ angular.module('analyticsApp')
         }
     }
 
+    $scope.activityLabels = ["Less Active", "Very Active"];
+    $scope.influenceLabels = ["Less Influence", "Very Influential"];
+
     $scope.init = function () { 
 
         /* Main Metrics */
@@ -36,7 +39,20 @@ angular.module('analyticsApp')
             })
         }).success( function (res) {
             $scope.pins = res;
+            if ($scope.pins.length == 0) { 
+                $scope.noLocationData = true;
+            }
+        }).error( function (err) {
+            console.log("There's an error");
+        });
 
+        $http.get(_config.api + "/friends/?engagement.followers:sd", { 
+            params: _.extend({}, $scope.config, { 
+                "limit": 500,
+                "created:lt": moment().format("YYYY-MM-DD"),
+                "created:gt": moment().subtract(1, "months").format("YYYY-MM-DD")
+            })
+        }).success( function (res) {
             var sizes = _.groupBy(res, function (d) { 
                 return Math.round( (d.engagement.followers + 500) / 1000 ) * 1000;
             });
@@ -63,12 +79,14 @@ angular.module('analyticsApp')
                 }
             });
 
-            $scope.sizes = _.values(sizes).slice(0, 10);
-            $scope.posts = _.values(posts).slice(0, 10);
+            sizes = _.values(sizes).slice(0, 10);
+            posts = _.values(posts).slice(0, 10);
 
-        }).error( function (err) {
-            console.log("There's an error");
+            $scope.sizes = sizes;
+            $scope.posts = posts;
+
         });
+
 
         // /* Lists Metrics */
 
@@ -121,13 +139,24 @@ angular.module('analyticsApp')
 
         /* Gender Metrics */
 
-        // $http.get(_config.api + "/friends/?gender:g&count:sd", { 
-        //     params: _.extend({}, $scope.config, {})
-        // }).success( function (res) { 
-        //     $scope.gender = res;
-        // }).error( function (err) {
-        //     console.log("There's an error");
-        // });
+        $http.get(_config.api + "/friends/?gender:g:in=male,female&count:sd", { 
+            params: _.extend({}, $scope.config, {})
+        }).success( function (res) { 
+            
+            var output = {};
+
+            var total = _.reduce(res, function (d, e) { return d + e.count; }, 0);
+            _.each(res, function (d) { 
+                d.percent = d.count * 100 / total;
+                output[d._id.gender] = d;
+            });
+
+            console.log(output);
+
+            $scope.gender = output;
+        }).error( function (err) {
+            console.log("There's an error");
+        });
     }
 
     $scope.platformLabels = function (d) { 
