@@ -16,7 +16,8 @@ angular.module('analyticsApp')
   	};
 
     $scope.filters = Filters;
-
+    $scope.limit = 5;
+    
     $scope.$watch("filters", function (d) { 
         $scope.init();
     }, true);

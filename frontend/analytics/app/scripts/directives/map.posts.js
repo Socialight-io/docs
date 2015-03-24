@@ -32,7 +32,10 @@ angular.module('analyticsApp')
 		  var mapOptions = {
 		    zoom: 2,
 		    center: new google.maps.LatLng(35.173808, -37.26562),
-		    styles: mapStyles
+		    styles: mapStyles,
+		    scrollwheel: false,
+		    navigationControl: false,
+		    mapTypeControl: false,
 		  };
 
 		  

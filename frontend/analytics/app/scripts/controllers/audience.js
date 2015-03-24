@@ -17,6 +17,9 @@ angular.module('analyticsApp')
         uid: _config.group.id
     };
 
+    $scope.limit = 5;
+    $scope.offset = 0;
+
     $scope.$watch("filters", function (d) { 
         $scope.init();
     }, true);
@@ -127,7 +130,7 @@ angular.module('analyticsApp')
 
         // /* Lists Metrics */
 
-        $http.get(_config.api + "/accounts/", { 
+        $http.get(_config.api + "/accounts", { 
             params: _.extend({}, $scope.config, {})
         }).success( function (res) { 
             $scope.list = res;

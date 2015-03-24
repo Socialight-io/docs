@@ -17,19 +17,6 @@
           <ul class="nav navbar-nav">
             <li ng-repeat="filter in filters.filters.dates" ng-class="{'active':(filter.label == filters.selected.dates.label)}"><a href="" ng-click="filters.selected.dates = filter">{{ filter.label }}</a></li>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Link</a></li>
-            <li class="dropdown">
-              <a href="" class="dropdown-toggle" ng-click="toggleDates">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu" ng-show="toggleDates">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-              </ul>
-            </li>
-          </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
@@ -44,15 +31,15 @@
     <div class="white-panel animate-fade" ng-class="{'fade-in': scatter}">
       <div class="row">
         <div class="col-xs-12">
-          <h3 class="title">Posts (Last 28 Days)</h3>
+          <h3 class="title">Posts ({{ filters.selected.dates.label }})</h3>
         </div>
       </div>
 
       <div class="row">
         <div class="col-xs-1">
-          <a href="" ng-click="limit = limit - 5; offset = offset + 5"><i class="fa fa-angle-left"></i></a>
+        <a href="" ng-click="limit = limit - 1"><i class="fa fa-angle-left"></i></a>
         </div>
-        <div class="col-sm-2 center" ng-repeat="item in list | limitTo:5">
+        <div class="col-sm-2 center" ng-repeat="item in list | limitTo:limit | limitTo: -5">
           <a href="" ng-mouseover="showScatter(item)" ng-mouseout="hideScatter(item)">
             <i class="fa fa-circle" style="color: {{ item._id.user.color }}"></i> 
             <i class="fa fa-{{ item._id.user.service.name == 'facebookpage' ? 'facebook' : item._id.user.service.name }}"></i> {{ item._id.user.name.alias }}
@@ -60,7 +47,7 @@
         </div>
 
         <div class="col-xs-1 right">
-          <a href="" ng-click="limit = limit + 5; offset = offset - 5"><i class="fa fa-angle-right"></i></a>
+          <a href="" ng-click="limit = limit + 1"><i class="fa fa-angle-right"></i></a>
         </div>
       </div>
 
@@ -82,7 +69,7 @@
     <div class="white-panel animate-fade" ng-class="{'fade-in': summary}">
       <div class="row">
         <div class="col-xs-12">
-          <h3 class="title">Accounts Summary</h3>
+          <h3 class="title">Accounts Summary ({{ filters.selected.dates.label }})</h3>
         </div>
       </div>
       <div class="row center">
@@ -171,7 +158,7 @@
     <div class="white-panel animate-fade" ng-class="{'fade-in': list}">
       <div class="row">
         <div class="col-xs-12">
-          <h3 class="title">Top Accounts</h3>
+          <h3 class="title">Top Accounts ({{ filters.selected.dates.label }})</h3>
         </div>
       </div>
       <div class="row">
@@ -186,7 +173,7 @@
               </a>
             </div>
             <div class="media-body">
-              <h3>{{ item.count }} <small>Posts</small></h3>
+              <h3>{{ item.count | num:0 }} <small>Posts</small></h3>
               <h4 class="media-heading"><a href="http://{{ item._id.user.service.name }}.com/{{ item._id.user.name.alias }}">
                 <img class="media-object" ng-src="{{ item._id.user.thumb.url }}" alt="...">
                 {{ item._id.user.name.full || item._id.user.name.alias }}</a></h4>
