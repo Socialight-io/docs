@@ -1,236 +1,238 @@
-<div class="container-nav">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
+<div class="analytics-container">
+    <div class="container-nav">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li ng-repeat="filter in filters.filters.dates" ng-class="{'active':(filter.label == filters.selected.dates.label)}"><a href="" ng-click="filters.selected.dates = filter">{{ filter.label }}</a></li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-</div>
-
-
-<div class="container-chart container" style="margin-top: 15px">
-    <div ng-hide="words" class="center loading-analytics">
-        <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Top Words...</h2>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li ng-repeat="filter in filters.filters.dates" ng-class="{'active':(filter.label == filters.selected.dates.label)}"><a href="" ng-click="filters.selected.dates = filter">{{ filter.label }}</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
     </div>
 
-    <div class="white-panel animate-fade" ng-class="{'fade-in': words}">
 
-        <div class="row">
-            <div class="col-xs-12">
-                <h3 class="title">Popular Words & Tags (Last 28 Days)</h3>
-            </div>
+    <div class="container-chart container" style="margin-top: 15px">
+        <div ng-hide="words" class="center loading-analytics">
+            <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Top Words...</h2>
         </div>
 
-        <div class="row" style="height: 400px">
-            <words data="words" modal="single" selected="selected" style="height: 400px"></words>
-        </div>
-    </div>
-</div>
+        <div class="white-panel animate-fade" ng-class="{'fade-in': words}">
 
-
-<div class="container container-metrics metrics blue">
-
-    <div ng-hide="summary" class="center loading-analytics">
-        <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Content Summary...</h2>
-    </div>
-
-    <div class="white-panel animate-fade" ng-class="{'fade-in': summary}">
-
-        <div class="row">
-            <div class="col-xs-12">
-                <h3 class="title">Content Summary March 2015</h3>
-            </div>
-        </div>
-        <div class="row center">
-            <div class="col-sm-4">
-                <div class="row">
-                    <div class="col-sm-4 right">
-                        <h1>{{ (summary[0].count | num:0) || "--" }}</h1>
-                    </div>
-                    <div class="col-xs-8 left">
-                        <h4>Posts</h4>
-                        <h5>
-                            {{ diff('count', summary) | num:1 }}%
-                        </h5>
-                    </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3 class="title">Popular Words & Tags (Last 28 Days)</h3>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="row">
-                    <div class="col-sm-4 right">
-                        <h1>{{ (summary[0].sentiment * 100 | num:1) || "--" }}%</h1>
-                    </div>
-                    <div class="col-xs-8 left">
-                        <h4>Sentiment</h4>
-                        <h5>
-                            {{ diff('sentiment', summary) | num:2 }}%
-                        </h5>
-                    </div>
+
+            <div class="row" style="height: 400px">
+                <words data="words" modal="single" selected="selected" style="height: 400px"></words>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container container-metrics metrics blue">
+
+        <div ng-hide="summary" class="center loading-analytics">
+            <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Content Summary...</h2>
+        </div>
+
+        <div class="white-panel animate-fade" ng-class="{'fade-in': summary}">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3 class="title">Content Summary March 2015</h3>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="row">
-                    <div class="col-sm-4 right">
-                        <h1>{{ ((summary[0].density * 100) | num: 1) || "--" }}%</h1>
-                    </div>
-                    <div class="col-xs-8 left">
-                        <h4>Density</h4>
-                        <h5>{{ diff('density', summary) | num:0 }}%</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row center metrics blue">
-            <div class="col-sm-4">
-                <div class="row">
-                    <div class="col-sm-4 right">
-                        <h1>{{ (summary[0].postlength | num:1) || "--" }}</h1>
-                    </div>
-                    <div class="col-xs-8 left">
-                        <h4>Post Length</h4>
-                        <h5>{{ diff('postlength', summary) | num:0 }}%</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="row">
-                    <div class="col-sm-4 right">
-                        <h1>{{ (summary[0].likes | num:0) || "--" }}</h1>
-                    </div>
-                    <div class="col-xs-8 left">
-                        <h4>Likes</h4>
-                        <h5>{{ diff('likes', summary) | num:0 }}%</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="row">
-                    <div class="col-sm-4 right">
-                        <h1>{{ (summary[0].comments | num:0) || "--" }}</h1>
-                    </div>
-                    <div class="col-xs-8 left">
-                        <h4>Comments</h4>
-                        <h5>{{ diff('comments', summary) | num:0 }}%</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container container-pies">
-
-    <div ng-hide="platform" class="center loading-analytics">
-        <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Platforms & Post Types...</h2>
-    </div>
-
-    <div class="white-panel animate-fade" ng-class="{'fade-in': platform}">
-
-        <div class="row">
-            <div class="col-xs-12">
-                <h3 class="title">Platforms & Post Types</h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-2">
-                <voice data="platform" label="platformLabels"></voice>
-            </div>
-            <div class="col-sm-4">
-                <h3>Platform</h3>
-                <p>Which voice do you use in posts?</p>
-            </div>
-            <div class="col-sm-2">
-                <voice data="posttype" label="typeLabels"></voice>
-            </div>
-            <div class="col-sm-4">
-                <h3>Post Type</h3>
-                <p>Which voice do you use in posts?</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container container-pies">
-    <div ng-hide="hourday" class="center loading-analytics">
-        <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Content Day & Times...</h2>
-    </div>
-
-    <div class="white-panel animate-fade" ng-class="{'fade-in': hourday}">
-
-        <div class="row">
-            <div class="col-xs-12">
-                <h3 class="title">Time & Day</h3>
-            </div>
-        </div>
-        <div class="row" style="height: 400px">
-            <timeday data="hourday" options="options.timeseries" modal="single" selected="selected"></timeday>
-        </div>
-    </div>
-</div>
-
-<div class="container container-pies">
-    <div ng-hide="posts" class="center loading-analytics">
-        <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Content Day & Times...</h2>
-    </div>
-
-    <div class="white-panel animate-fade center" ng-class="{'fade-in': hourday}" style="margin-bottom: 10px">
-        <h3>Most engaging images for this time period</h3>
-    </div>
-    <div class="animate-fade" ng-class="{'fade-in': posts}">
-        <div class="tiles">
-            <div class="tile-small tile" ng-repeat="tile in posts | limitTo: 10">
-                <div class="tile-padding">
-                    <div class="tile-media">
-                        <a href="" ng-click="showModal(tile)">
-                            <img src="{{ tile.media[0].url }}" />
-                        </a>
-                    </div>
-                    <div class="tile-meta">
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="" ng-click="showModal(tile)">
-                                    <img class="media-object" ng-src="{{ tile.user.thumb.url }}" alt="...">
-                                </a>
-                            </div>
-                            <div class="media-body">
-                            <h5 class="media-heading">{{ tile.user.name.alias || tile.user.name.full }}</h5>
-                                {{ tile.created|date }}
-                            </div>
+            <div class="row center">
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-4 right">
+                            <h1>{{ (summary[0].count | num:0) || "--" }}</h1>
+                        </div>
+                        <div class="col-xs-8 left">
+                            <h4>Posts</h4>
+                            <h5>
+                                {{ diff('count', summary) | num:1 }}%
+                            </h5>
                         </div>
                     </div>
-                    <div class="tile-content truncate">
-                        {{ tile.post || "..." }}
+                </div>
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-4 right">
+                            <h1>{{ (summary[0].sentiment * 100 | num:1) || "--" }}%</h1>
+                        </div>
+                        <div class="col-xs-8 left">
+                            <h4>Sentiment</h4>
+                            <h5>
+                                {{ diff('sentiment', summary) | num:2 }}%
+                            </h5>
+                        </div>
                     </div>
-                    <div class="tile-analytics">
-                        <div class="row">
-                            <div class="col-xs-6 center">
-                                <h3>{{ tile.engagement.audience.total | num:0 }}</h3>
-                                <p>Audience</p>
-                            </div>
-                            <div class="col-xs-6 center">
-                                <h3>{{ tile.meta.engagement * 100 | num:1 }}%</h3>
-                                <p>Engagement</p>
-                            </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-4 right">
+                            <h1>{{ ((summary[0].density * 100) | num: 1) || "--" }}%</h1>
+                        </div>
+                        <div class="col-xs-8 left">
+                            <h4>Density</h4>
+                            <h5>{{ diff('density', summary) | num:0 }}%</h5>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> 
+            <div class="row center metrics blue">
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-4 right">
+                            <h1>{{ (summary[0].postlength | num:1) || "--" }}</h1>
+                        </div>
+                        <div class="col-xs-8 left">
+                            <h4>Post Length</h4>
+                            <h5>{{ diff('postlength', summary) | num:0 }}%</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-4 right">
+                            <h1>{{ (summary[0].likes | num:0) || "--" }}</h1>
+                        </div>
+                        <div class="col-xs-8 left">
+                            <h4>Likes</h4>
+                            <h5>{{ diff('likes', summary) | num:0 }}%</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-4 right">
+                            <h1>{{ (summary[0].comments | num:0) || "--" }}</h1>
+                        </div>
+                        <div class="col-xs-8 left">
+                            <h4>Comments</h4>
+                            <h5>{{ diff('comments', summary) | num:0 }}%</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <modal show="show" data="selected"></modal>
+    <div class="container container-pies">
+
+        <div ng-hide="platform" class="center loading-analytics">
+            <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Platforms & Post Types...</h2>
+        </div>
+
+        <div class="white-panel animate-fade" ng-class="{'fade-in': platform}">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3 class="title">Platforms & Post Types</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <voice data="platform" label="platformLabels"></voice>
+                </div>
+                <div class="col-sm-4">
+                    <h3>Platform</h3>
+                    <p>Which voice do you use in posts?</p>
+                </div>
+                <div class="col-sm-2">
+                    <voice data="posttype" label="typeLabels"></voice>
+                </div>
+                <div class="col-sm-4">
+                    <h3>Post Type</h3>
+                    <p>Which voice do you use in posts?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container container-pies">
+        <div ng-hide="hourday" class="center loading-analytics">
+            <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Content Day & Times...</h2>
+        </div>
+
+        <div class="white-panel animate-fade" ng-class="{'fade-in': hourday}">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3 class="title">Time & Day</h3>
+                </div>
+            </div>
+            <div class="row" style="height: 400px">
+                <timeday data="hourday" options="options.timeseries" modal="single" selected="selected"></timeday>
+            </div>
+        </div>
+    </div>
+
+    <div class="container container-pies">
+        <div ng-hide="posts" class="center loading-analytics">
+            <h2><i class="fa fa-spin fa-circle-o-notch"></i> Loading Content Day & Times...</h2>
+        </div>
+
+        <div class="white-panel animate-fade center" ng-class="{'fade-in': hourday}" style="margin-bottom: 10px">
+            <h3>Most engaging images for this time period</h3>
+        </div>
+        <div class="animate-fade" ng-class="{'fade-in': posts}">
+            <div class="tiles">
+                <div class="tile-small tile" ng-repeat="tile in posts | limitTo: 10">
+                    <div class="tile-padding">
+                        <div class="tile-media">
+                            <a href="" ng-click="showModal(tile)">
+                                <img src="{{ tile.media[0].url }}" />
+                            </a>
+                        </div>
+                        <div class="tile-meta">
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="" ng-click="showModal(tile)">
+                                        <img class="media-object" ng-src="{{ tile.user.thumb.url }}" alt="...">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <h5 class="media-heading">{{ tile.user.name.alias || tile.user.name.full }}</h5>
+                                    {{ tile.created|date }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tile-content truncate">
+                            {{ tile.post || "..." }}
+                        </div>
+                        <div class="tile-analytics">
+                            <div class="row">
+                                <div class="col-xs-6 center">
+                                    <h3>{{ tile.engagement.audience.total | num:0 }}</h3>
+                                    <p>Audience</p>
+                                </div>
+                                <div class="col-xs-6 center">
+                                    <h3>{{ tile.meta.engagement * 100 | num:1 }}%</h3>
+                                    <p>Engagement</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+
+        <modal show="show" data="selected"></modal>
+    </div>
 </div>
