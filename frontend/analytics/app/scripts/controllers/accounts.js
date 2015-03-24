@@ -8,17 +8,25 @@
  * Controller of the analyticsApp
  */
 angular.module('analyticsApp')
-  .controller('AccountsCtrl', ['$scope', 'Data', '$http', function ($scope, Data, $http) {
+  .controller('AccountsCtrl', ['$scope', 'Data', '$http', 'Filters', function ($scope, Data, $http, Filters) {
 
   	$scope.config = {
   		token: _config.group.token,
   		uid: _config.group.id
   	};
 
+    $scope.filters = Filters;
+
+    $scope.$watch("filters", function (d) { 
+        $scope.init();
+    }, true);
+
     $scope.diff = function (label, object) { 
-      var dm = 30 / moment(object[0].created).format("D");
-      var change = (object[0][label] * dm) - (object[1][label]);
-      return (change / object[1][label]) * 100;
+      if (object && object[0] && object[1]) { 
+        var dm = 30 / moment(object[0].created).format("D");
+        var change = (object[0][label] * dm) - (object[1][label]);
+        return (change / object[1][label]) * 100;
+      } else { return "--"; }
     }
 
     $scope.showScatter = function (item) { 
@@ -34,12 +42,12 @@ angular.module('analyticsApp')
 
 
   		/* Main Metrics */
-
+      $scope.summary = null;
     	$http.get(_config.api + "/posts/?created:mnth:g", { 
     		params: _.extend({}, $scope.config, { 
   				limit: -1,
-  				"created:lt": moment().format("YYYY-MM-DD"),
-  				"created:gt": moment().subtract(2, "months").format("YYYY-MM-DD")
+  				"created:lt": $scope.filters.selected.dates.end,
+  				"created:gt": $scope.filters.selected.dates.pre
   			})
     	}).success( function (res) { 
     		$scope.summary = res;
@@ -48,12 +56,12 @@ angular.module('analyticsApp')
     	});
 
   		/* Lists Metrics */
-
+      $scope.list = null;
     	$http.get(_config.api + "/posts/?user:g", { 
     		params: _.extend({}, $scope.config, { 
   				limit: -1,
-  				"created:lt": moment().format("YYYY-MM-DD"),
-  				"created:gt": moment().subtract(1, "months").format("YYYY-MM-DD")
+  				"created:lt": $scope.filters.selected.dates.end,
+  				"created:gt": $scope.filters.selected.dates.start
   			})
     	}).success( function (res) { 
     		$scope.list = res;
@@ -62,12 +70,12 @@ angular.module('analyticsApp')
     	});
 
       /* Top Posts */
-
+      $scope.posts = null; $scope.scatter = null;
       $http.get(_config.api + "/posts/?meta.engagement:sd", { 
         params: _.extend({}, $scope.config, { 
           "limit": 500,
-          "created:lt": moment().format("YYYY-MM-DD"),
-          "created:gt": moment().subtract(28, "days").format("YYYY-MM-DD")
+          "created:lt": $scope.filters.selected.dates.end,
+          "created:gt": $scope.filters.selected.dates.start
         })
       }).success( function (res) { 
         $scope.posts = res;

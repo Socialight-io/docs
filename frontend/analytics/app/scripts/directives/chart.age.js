@@ -69,7 +69,6 @@ angular.module('analyticsApp')
 						.orient("right")
 					    .ticks(5)
 					    .tickFormat(function (d) { 
-					    	console.log(d);
 					    	return d + "%";
 					    });
 

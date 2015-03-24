@@ -53,10 +53,10 @@ angular.module('analyticsApp')
 						.range([height, 0]);
 
 					var scale = d3.scale.linear()
-						.range([0, 1])
+						.range([.2, 1])
 
 					var scaleEng = d3.scale.linear()
-						.range([0, (width/24)])
+						.range([10, (width/36)])
 
 					var xAxis = d3.svg.axis()
 						.scale(x)
@@ -82,6 +82,9 @@ angular.module('analyticsApp')
 						.tickFormat(function(d, i) {
 							return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][i]
 					    });
+
+					console.log(scope.data);
+
 					d3.select("#" + scope.id + " svg").remove();
 					
 					var svg = d3.select("#" + scope.id).append("svg")

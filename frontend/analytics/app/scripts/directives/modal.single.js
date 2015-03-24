@@ -12,11 +12,8 @@ angular.module('analyticsApp')
       templateUrl: _appConfig.templatePath + 'includes/modal.single.html',
       restrict: 'E',
       scope: { 
-      	options: "=",
-      	include: "=",
       	data: "=",
       	show: "=",
-      	includeTemplate: "="
       },
       link: function postLink(scope, element, attrs) {
       	scope.id = "modal-" + Math.round(Math.random() * 1000000);

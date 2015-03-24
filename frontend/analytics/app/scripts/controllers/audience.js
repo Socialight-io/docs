@@ -8,12 +8,19 @@
  * Controller of the analyticsApp
  */
 angular.module('analyticsApp')
-  .controller('AudienceCtrl', ['$scope', '$http', function ($scope, $http) {
+  .controller('AudienceCtrl', ['$scope', '$http', 'Filters', function ($scope, $http, Filters) {
+    
+    $scope.filters = Filters;
+
     $scope.config = {
         token: _config.group.token,
         uid: _config.group.id
     };
 
+    $scope.$watch("filters", function (d) { 
+        $scope.init();
+    }, true);
+    
     $scope.diff = function (label, object) { 
         if (object &&object[0] && object[1]) { 
           var dm = 30 / moment(object[0].created).format("D");
@@ -22,6 +29,15 @@ angular.module('analyticsApp')
         } else { 
             return "--";
         }
+    }
+
+    $scope.showArea = function (item) { 
+      $('.area').attr('data-fade', true);
+      $('[data-account="'+item.name.alias+'"]').attr('data-fade', false);
+    }
+
+    $scope.hideArea = function (item) { 
+      $('.area').attr('data-fade', false);
     }
 
     $scope.activityLabels = ["Less Active", "Very Active"];
@@ -33,9 +49,7 @@ angular.module('analyticsApp')
 
         $http.get(_config.api + "/friends/?engagement.followers:sd&location.place:gt=0", { 
             params: _.extend({}, $scope.config, { 
-                "limit": 1000,
-                "created:lt": moment().format("YYYY-MM-DD"),
-                "created:gt": moment().subtract(1, "months").format("YYYY-MM-DD")
+                "limit": 1000
             })
         }).success( function (res) {
             $scope.pins = res;
@@ -46,11 +60,34 @@ angular.module('analyticsApp')
             console.log("There's an error");
         });
 
+        // Influence growth
+        $http.get(_config.api + "/posts/?created:week:g&user:g", { 
+            params: _.extend({}, $scope.config, { 
+                "limit": 1000,
+                "created:lt": $scope.filters.selected.dates.end,
+                "created:gt": $scope.filters.selected.dates.start
+            })
+        }).success( function (res) {
+            res = _.map(res, function (d) { 
+                d.date = moment().day("Monday").week(d._id.created.week).year(d._id.created.year).toDate();
+                return d;
+            });
+
+            res = _.sortBy(res, 'date');
+
+            var accounts = _.groupBy(res, function (d) { 
+                return d._id.user.name.alias;
+            });
+
+            $scope.accountgrowth = _.values(accounts);
+        }).error( function (err) {
+            console.log("There's an error");
+        });
+
+
         $http.get(_config.api + "/friends/?engagement.followers:sd", { 
             params: _.extend({}, $scope.config, { 
-                "limit": 500,
-                "created:lt": moment().format("YYYY-MM-DD"),
-                "created:gt": moment().subtract(1, "months").format("YYYY-MM-DD")
+                "limit": 500
             })
         }).success( function (res) {
             var sizes = _.groupBy(res, function (d) { 
@@ -90,13 +127,30 @@ angular.module('analyticsApp')
 
         // /* Lists Metrics */
 
-        $http.get(_config.api + "/accounts/?uid:g", { 
+        $http.get(_config.api + "/accounts/", { 
             params: _.extend({}, $scope.config, {})
         }).success( function (res) { 
-            $scope.summary = res;
+            $scope.list = res;
         }).error( function (err) {
             console.log("There's an error");
         });
+
+        $http.get(_config.api + "/accounts/?uid:g", { 
+            params: _.extend({}, $scope.config, {})
+        }).success( function (res) { 
+            $scope.summary = res[0];
+        }).error( function (err) {
+            console.log("There's an error");
+        });
+
+        $http.get(_config.api + "/posts/?uid:g", { 
+            params: _.extend({}, $scope.config, {})
+        }).success( function (res) { 
+            $scope.postsSummary = res[0];
+        }).error( function (err) {
+            console.log("There's an error");
+        });
+
 
         /* Countries Metrics */
 
@@ -150,8 +204,6 @@ angular.module('analyticsApp')
                 d.percent = d.count * 100 / total;
                 output[d._id.gender] = d;
             });
-
-            console.log(output);
 
             $scope.gender = output;
         }).error( function (err) {

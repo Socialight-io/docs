@@ -29,9 +29,11 @@
 <script type="text/javascript">
     var _config = { api: "http://api.socialight.io", user: {"id": 28, "last_name": "Silver", "email": "lgsilver@gmail.com", "first_name": "Lindsay"}, queue: "consume",  group: { name: "Socialight Competitors", id: 767, token: "SdukCbNs9FPvfBdREYZVGkL6EckNsfQw" } };
 
+    // var _config = { api: "http://staging.api.socialight.io", user: {"last_name": "Silver", "id": 58, "email": "lgsilver+testthis@gmail.com", "first_name": "Lindsay"}, queue: "consume-staging",  group: { name: "Competitors", id: 172, token: "nuP195ZTSKCLNCDJe7BmlgEDUlvI4DIu" }  };
+    
     // var _config = { api: "http://api.socialight.io", user: {"id": 28, "last_name": "Silver", "first_name": "Lindsay", "email": "lgsilver@gmail.com"}, queue: "consume",  group: { name: "Socialight Group", id: 1007, token: "SdukCbNs9FPvfBdREYZVGkL6EckNsfQw" }};
 
-    var _config = { api: "http://staging.api.socialight.io", user: {"last_name": "Silver", "first_name": "Lindsay", "email": "lindsay@socialight.io", "id": 19}, queue: "consume-staging",  group: { name: "Famous Artists", id: 135, token: "dNtqVvzM8Wc1EYDGNaUBjwUA41CJAzbX" }  };
+    // var _config = { api: "http://staging.api.socialight.io", user: {"last_name": "Silver", "first_name": "Lindsay", "email": "lindsay@socialight.io", "id": 19}, queue: "consume-staging",  group: { name: "Famous Artists", id: 135, token: "dNtqVvzM8Wc1EYDGNaUBjwUA41CJAzbX" }  };
     
 
       var _appConfig = {
@@ -43,7 +45,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&key=AIzaSyDV0wJO1zrxjX2wgCFu4bHfYKP5eXi7k3k"></script>
     <script src="http://localhost:8000/static/dist/scripts/vendor.js"></script>
     <script src="http://localhost:8000/static/dist/scripts/scripts.js"></script>
-
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/angular/angular.js"></script>
@@ -76,6 +78,8 @@
         <script src="scripts/directives/map.posts.js"></script>
         <script src="scripts/directives/chart.age.js"></script>
         <script src="scripts/directives/chart.posts.js"></script>
+        <script src="scripts/services/filters.js"></script>
+        <script src="scripts/directives/chart.accountgrowth.js"></script>
         <!-- endbuild -->
 </body>
 </html>

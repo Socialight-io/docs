@@ -9,12 +9,6 @@
  * Main module of the application.
  */
 
-$.get(_config.api + "/accounts", { token: _config.group.token, uid: _config.group.id }, function (d) { 
-  if (d.length == 0) { 
-    window.location = "/groups/" + _config.group.id + "/accountant";
-  }
-});
-
 angular
   .module('analyticsApp', [
     'ngAnimate',

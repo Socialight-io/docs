@@ -109,19 +109,19 @@ angular.module('analyticsApp')
 						.style("fill", "white");
 
 					yax.append("text")
-						.attr("transform", "rotate(-90)")
+						.attr("transform", "rotate(90)")
 						.attr("y", 6)
-						.attr("x", -(height / 2) + 10)
+						.attr("x", (height / 2))
 						.attr("dy", ".71em")
-						.style("text-anchor", "start")
+						.style("text-anchor", "end")
 						.text("WORD FREQUENCY");
 
 					yax.append("text")
-						.attr("transform", "rotate(-90)")
+						.attr("transform", "rotate(90)")
 						.attr("y", 6)
-						.attr("x", -(height) + 10)
+						.attr("x", (height))
 						.attr("dy", ".71em")
-						.style("text-anchor", "start")
+						.style("text-anchor", "end")
 						.text("ENGAGEMENT");
 
 					svg.selectAll(".y.axis .tick text").remove();

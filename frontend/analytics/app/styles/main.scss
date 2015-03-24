@@ -16,6 +16,11 @@ body, body.light-body {
   width: inherit !important;
   margin-bottom: 15px;
   position: relative;
+  padding: 0 !important;
+}
+
+.container-fluid { 
+  padding: 0;
 }
 
 .white-panel { 
@@ -103,10 +108,11 @@ h3.title-table {
   }
 }
 
-.circle { 
+.circle, .area { 
   opacity: .5;
   transition: all .5s ease;
 }
+
 [data-fade="true"] { 
   opacity: .1 !important;
   fill: #AAA !important;
@@ -156,6 +162,12 @@ h3.title-table {
 }
 
 .tile { 
+  .tile-padding { 
+    margin: 6px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(12,71,89,.3);
+  }
   .tile-media { 
     max-height: 400px;
     overflow: hidden;
@@ -167,8 +179,17 @@ h3.title-table {
   }
 
   .tile-meta { 
-    margin-bottom: 20px;
-    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    img { 
+      width: 36px;
+      border-radius: 18px;
+    }
+  }
+
+  .tile-content, .tile-meta { 
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   .tile-analytics { 
@@ -184,10 +205,36 @@ h3.title-table {
   }
 }
 
+.tiles { 
+  .tile { 
+    width: 20%;
+    float: left;
+    position: relative;
+    overflow: hidden;
+    img { 
+      width: 100%;
+    }
+  }
+}
+
 .animate-fade { 
   opacity: 0;
   transition: all 1s;
   &.fade-in { 
     opacity: 1;
+  }
+}
+
+.matrix { 
+  &.matrix-5 { 
+    .tile { 
+      width: 20%;
+      float: left;
+      overflow: hidden;
+
+      img { 
+        max-width: 100%;
+      }
+    }
   }
 }
