@@ -34,9 +34,8 @@ angular.module('analyticsApp')
     }
 
     $scope.showModal = function (data) { 
-        console.log("THIS fAR ISZA");
         $scope.show = true;
-        $scope.selected = data;
+        $scope.selecto = data;
     }
 
     $scope.init = function () { 

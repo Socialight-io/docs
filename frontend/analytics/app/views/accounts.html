@@ -1,24 +1,22 @@
 <div class="analytics-container">
   <div class="container-nav">
     <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li ng-repeat="filter in filters.filters.dates" ng-class="{'active':(filter.label == filters.selected.dates.label)}"><a href="" ng-click="filters.selected.dates = filter">{{ filter.label }}</a></li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
+      <ul class="nav navbar-nav">
+        <li>
+          <span class="navbar-text app-title">Account Analytics</span>
+        </li>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+              {{ filters.selected.dates.label || 'Select a Date Range' }}
+              <i class="fa fa-angle-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-right" role="menu">
+              <li ng-repeat="filter in filters.filters.dates" ng-class="{'active':(filter.label == filters.selected.dates.label)}"><a href="" ng-click="filters.selected.dates = filter">{{ filter.label }}</a></li>
+            </ul>
+          </li>
+        </ul>
+      </ul>
     </nav>
   </div>
 
@@ -42,7 +40,7 @@
         <div class="col-sm-2 center" ng-repeat="item in list | limitTo:limit | limitTo: -5">
           <a href="" ng-mouseover="showScatter(item)" ng-mouseout="hideScatter(item)">
             <i class="fa fa-circle" style="color: {{ item._id.user.color }}"></i> 
-            <i class="fa fa-{{ item._id.user.service.name == 'facebookpage' ? 'facebook' : item._id.user.service.name }}"></i> {{ item._id.user.name.alias }}
+            <i class="fa fa-{{ item._id.user.service.name == 'facebookpage' ? 'facebook' : item._id.user.service.name }}"></i> {{ item._id.user.name.alias || item._id.user.name.full }}
           </a>
         </div>
 
@@ -52,13 +50,13 @@
       </div>
 
       <div class="row" style="height: 400px">
-        <scatter data="scatter" options="options.timeseries" modal="single" selected="selected"></scatter>
+        <scatter data="scatter" options="options.timeseries" modal="single" selecto="selecto"></scatter>
       </div>
 
     </div>
   </div>
 
-  <modal show="single" data="selected" includeTemplate="'views/includes/tile.html'"></modal>
+  <modal show="single" data="selecto"></modal>
 
   <div class="container container-metrics metrics blue">
 

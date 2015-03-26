@@ -7,10 +7,6 @@ $white: #FFFFFF;
 $gray: #99c5cd;
 $grey: $gray;
 
-body, body.light-body { 
-  background: #EFEFEF !important;
-}
-
 .container { 
   margin-bottom: 30px;
   width: inherit !important;
@@ -30,16 +26,15 @@ body, body.light-body {
     box-shadow: 0 1px 2px rgba(12,71,89,.3);
     margin-bottom: 0;
 
-    li { 
-      &.active { 
-        a { 
-          background: lighten($blue, 30);
-        }
-      }
+    .navbar-text.app-title { 
+      margin: 0;
+      padding: 16px 20px 15px 20px;
+      border-right: solid 1px lighten($blue, 20);
+      color: darken($blue, 20);
+    }
 
-      a { 
-        color: #1eb4e0!important;
-      }
+    .nav > li > a { 
+      color: $blue;
     }
   }
 }
@@ -80,8 +75,9 @@ body, body.light-body {
   top: 0;
   left: 0;
   width: 100%;
+  color: white;
   h2 { 
-    color: lighten($gray, 10);
+    color: white !important;
   }
 }
 
@@ -106,6 +102,7 @@ h3.title-table {
   margin: 0;
   color: darken($gray, 20);
 }
+
 .top-5 { 
   .media { 
     img { 
@@ -236,8 +233,13 @@ h3.title-table {
     float: left;
     position: relative;
     overflow: hidden;
+    .tile-media {
+      height: 200px;
+      overflow: hidden;
+    }
     img { 
       width: 100%;
+      max-height: 200px;
     }
   }
 }

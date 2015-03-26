@@ -1,26 +1,24 @@
 <div class="analytics-container">
-    <div class="container-nav">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li ng-repeat="filter in filters.filters.dates" ng-class="{'active':(filter.label == filters.selected.dates.label)}"><a href="" ng-click="filters.selected.dates = filter">{{ filter.label }}</a></li>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
-    </div>
+  <div class="container-nav">
+    <nav class="navbar navbar-default">
+      <ul class="nav navbar-nav">
+        <li>
+          <span class="navbar-text app-title">Content Analytics</span>
+        </li>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+              {{ filters.selected.dates.label || 'Select a Date Range' }}
+              <i class="fa fa-angle-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-right" role="menu">
+              <li ng-repeat="filter in filters.filters.dates" ng-class="{'active':(filter.label == filters.selected.dates.label)}"><a href="" ng-click="filters.selected.dates = filter">{{ filter.label }}</a></li>
+            </ul>
+          </li>
+        </ul>
+      </ul>
+    </nav>
+  </div>
 
 
     <div class="container-chart container" style="margin-top: 15px">
@@ -189,7 +187,7 @@
         </div>
 
         <div class="white-panel animate-fade center" ng-class="{'fade-in': hourday}" style="margin-bottom: 10px">
-            <h3>Most engaging images for this time period</h3>
+            <h3>Most engaging content for this time period</h3>
         </div>
         <div class="animate-fade" ng-class="{'fade-in': posts}">
             <div class="tiles">
@@ -197,14 +195,14 @@
                     <div class="tile-padding">
                         <div class="tile-media">
                             <a href="" ng-click="showModal(tile)">
-                                <img src="{{ tile.media[0].url }}" />
+                                <img src="{{ tile.media[0].url }}" ng-show="tile.media[0]" />
                             </a>
                         </div>
                         <div class="tile-meta">
                             <div class="media">
                                 <div class="media-left">
                                     <a href="" ng-click="showModal(tile)">
-                                        <img class="media-object" ng-src="{{ tile.user.thumb.url }}" alt="...">
+                                        <img class="media-object" ng-src="{{ tile.user.thumb.url }}" ng-show="tile.media[0]" alt="...">
                                     </a>
                                 </div>
                                 <div class="media-body">
@@ -233,6 +231,6 @@
             </div> 
         </div>
 
-        <modal show="show" data="selected"></modal>
+        <modal show="show" data="selecto"></modal>
     </div>
 </div>

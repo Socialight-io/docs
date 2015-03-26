@@ -19,6 +19,7 @@ angular.module('analyticsApp')
       	scope.id = "modal-" + Math.round(Math.random() * 1000000);
 
       	scope.$watch("show", function () { 
+          console.log(scope.data);
       		if (scope.show == true) { 
       			$("#"+scope.id).modal({show: true, background: 'static'});
       		} else { 

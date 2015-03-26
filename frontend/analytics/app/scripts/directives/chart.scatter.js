@@ -14,7 +14,7 @@ angular.module('analyticsApp')
 			scope: {
 				data: "=",
 				options: "=",
-				selected: "=",
+				selecto: "=",
 				modal: "="
 			},
 			link: function postLink(scope, element, attrs) {
@@ -168,10 +168,9 @@ angular.module('analyticsApp')
 							d3.selectAll(".circle").attr("data-fade", false);
 						})
 						.on("mousedown", function(d) {
-							scope.$apply(function () { 
-								scope.selected = d;
-								scope.modal = true;
-							});
+							scope.selecto = d;
+							scope.modal = true;
+							scope.$apply();
 						});
 				}
 
