@@ -116,7 +116,7 @@ angular.module('analyticsApp')
             $scope.posts = res;
 
             var hourDay = _.groupBy(res, function(d) { 
-                return moment.utc(d.created).format("H-E");
+                return moment(d.created).format("H-E");
             });
 
             _.each(hourDay, function (d, i) { 
