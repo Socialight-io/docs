@@ -95,7 +95,7 @@ angular.module('analyticsApp')
 							return moment.utc(d.created.substr(0, 10)).subtract("1", "days").toDate();
 						}),
 						d3.max(data, function(d) {
-							return moment.utc(d.created.substr(0, 10)).add("1", "days").toDate();
+							return moment.utc(d.created.substr(0, 10)).add("2", "days").toDate();
 						})
 					]);
 

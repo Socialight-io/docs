@@ -7,19 +7,23 @@ $white: #FFFFFF;
 $gray: #99c5cd;
 $grey: $gray;
 
-.container { 
-  margin-bottom: 30px;
-  width: inherit !important;
-  margin-bottom: 15px;
-  position: relative;
-  padding: 0 !important;
-}
-
 .analytics-container { 
   padding-left: 15px;
   padding-right: 15px;
   padding-top: 15px;
 
+  .container { 
+    margin-bottom: 30px;
+    width: inherit !important;
+    margin-bottom: 15px;
+    position: relative;
+    padding: 0 !important;
+  }
+
+  .container-fluid { 
+    padding: 0;
+  }
+  
   .navbar.navbar-default { 
     background: white;
     color: darken($blue, 20);
@@ -37,10 +41,6 @@ $grey: $gray;
       color: $blue;
     }
   }
-}
-
-.container-fluid { 
-  padding: 0;
 }
 
 .white-panel { 
